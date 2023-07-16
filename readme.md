@@ -29,7 +29,27 @@ npm install -g banal
 </p>
  -->
 
-//TODO
+Some example usages:
+
+```sh
+# Analyze a single module
+banal -m crypto-sha
+
+# Analyze a single module at a specific version
+banal -m crypto-sha@1.0.0
+
+# Analyze a single namespaced module
+banal @fabiospampinato/is
+
+# Analyze multiple modules together
+banal -m crypto-sha @fabiospampinato/is
+
+# Analyze a Node module
+banal -p node -m banal
+
+# Analyze a single module with a custom entry file
+banal -m @fabiospampinato/is -e 'export {isWeakRef} from "@fabiospampinato/is";'
+```
 
 ## License
 
