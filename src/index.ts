@@ -45,7 +45,7 @@ const Banal = {
 
     /* BUNDLING */
 
-    const inputAll = modules.map ( module => `export * from '${module}';` ).join ( '\n' );
+    const inputAll = modules.map ( module => `export * from '${module.replace ( /(.)@.*/, '$1' )}';` ).join ( '\n' );
     const input = options.entry || inputAll;
 
     await fs.writeFile ( inputPath, input );
