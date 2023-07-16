@@ -23,6 +23,7 @@
     "esbuild": "^0.18.13",
     "open": "^9.1.0",
     "radix64-encoding": "^2.0.1",
+    "sanitize-basename": "^2.0.0",
     "specialist": "^1.2.0",
     "tiny-dirname": "^1.0.0",
     "zeptoid": "^1.0.1"

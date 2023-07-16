@@ -6,6 +6,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import open from 'open';
 import Base64 from 'radix64-encoding';
+import sanitize from 'sanitize-basename';
 import dirname from 'tiny-dirname';
 import {castArray, getTempPath, shell} from './utils';
 import type {Options} from './types';
@@ -28,18 +29,18 @@ const Banal = {
     const resourcesPath = path.join ( distPath, '..', 'resources' );
     const analyzerTemplatePath = path.join ( resourcesPath, 'analyzer.html' );
 
+    const modules = castArray ( options.module );
+    const outputName = sanitize ( modules.join ( '_' ).replaceAll ( '/', '-' ) );
+
     const tempPath = await getTempPath ( 'banal' );
     const inputPath = path.join ( tempPath, 'input.js' );
-    const outputPath = path.join ( tempPath, 'bundle.js' );
+    const outputPath = path.join ( tempPath, `${outputName}.js` );
     const analyzerPath = path.join ( tempPath, 'analyzer.html' );
 
     console.log ( `Temp path: ${tempPath}` );
 
     /* INSTALLING */
 
-    const modules = castArray ( options.module );
-
-    await shell ( `npm init --yes`, { cwd: tempPath } );
     await shell ( `npm install --ignore-scripts --no-audit --no-fund --no-package-lock ${modules.join ( ' ' )}`, { cwd: tempPath } );
 
     /* BUNDLING */
