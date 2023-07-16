@@ -1,0 +1,37 @@
+> This was tested under macOS+node+npm, if it doesn't work for you please open an issue.
+
+# Banal
+
+On-demand bundle analyzer, powered by esbuild.
+
+## Features
+
+This little terminal app exists because [Bundlephobia](https://bundlephobia.com) and [bundlejs](https://bundlejs.com) are pretty cool and useful, but bundling locally and with offline support can easily work more reliably.
+
+- **Simple**: the way this app works is super simple, it just generates the metadata file for the [bundler analyzer](https://esbuild.github.io/analyze) in a temporary directory, embeds it inside the bundle analyzer itself, and opens it.
+- **Secure**: postinstall scripts are disabled for security reasons, and only dependencies I personally maintain, plus [`esbuild`](https://github.com/evanw/esbuild) and [`open`](https://github.com/sindresorhus/open), are used.
+- **Available**: unless NPM itself is unreachable, or esbuild can't bundle your modules, this bundle analyzer will always be available.
+- **Reliable**: bundling locally on your computer works more reliably than what [bundlejs](https://bundlejs.com) is doing, for example this works better with modules marked as side-effects-free, just by default.
+- **Offline support**: esbuild's amazing [bundle analyzer](https://esbuild.github.io/analyze) is embedded within the app, so the analysis can potentially even work if you are offline, if NPM has the modules you want to analyze cached already.
+- **Sharing support**: a single HTML file is generated, specific to the analyzed modules, so it can be shared trivially.
+
+## Install
+
+```sh
+npm install -g banal
+```
+
+## Usage
+
+<!--
+<p align="center">
+  <img src="resources/demo.gif" width="700" alt="Demo">
+</p>
+ -->
+
+//TODO
+
+## License
+
+- App: MIT © Fabio Spampinato
+- Bundler & Analyzer: MIT © [@evanw](https://github.com/evanw)
