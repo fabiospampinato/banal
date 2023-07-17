@@ -38,6 +38,7 @@ const Banal = {
     const tempPath = await getTempPath ( 'banal' );
     const inputPath = path.join ( tempPath, 'input.js' );
     const outputPath = path.join ( tempPath, `${outputName}.js` );
+    const metafilePath = path.join ( tempPath, 'metafile.json' );
     const analyzerPath = path.join ( tempPath, 'analyzer.html' );
 
     console.log ( `Temp path: ${tempPath}` );
@@ -75,6 +76,8 @@ const Banal = {
 
     const metafile = JSON.stringify ( result.metafile );
     const metafile64 = Base64.encodeStr ( metafile );
+
+    await fs.writeFile ( metafilePath, metafile );
 
     const analyzerTemplate = await fs.readFile ( analyzerTemplatePath, 'utf8' );
     const analyzer = analyzerTemplate.replace ( `globalThis.METAFILE = '';`, `globalThis.METAFILE = '${metafile64}';` );
