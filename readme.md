@@ -24,11 +24,7 @@ npm install -g banal
 
 ## Usage
 
-<!--
-<p align="center">
-  <img src="resources/demo.gif" width="700" alt="Demo">
-</p>
- -->
+https://github.com/fabiospampinato/banal/assets/1812093/253dd89b-d0f0-43e2-ba30-4149c2bbb6a1
 
 Some example usages:
 
