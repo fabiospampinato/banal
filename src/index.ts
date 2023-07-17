@@ -22,7 +22,7 @@ const Banal = {
 
     /* CHECKS */
 
-    if ( !options.module ) throw new Error ( 'You need to specify at least one module to analyze' );
+    if ( !options.module?.length ) throw new Error ( 'You need to specify at least one module to analyze' );
 
     /* PATHS */
 
