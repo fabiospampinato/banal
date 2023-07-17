@@ -24,7 +24,7 @@ npm install -g banal
 
 ## Usage
 
-https://github.com/fabiospampinato/banal/assets/1812093/253dd89b-d0f0-43e2-ba30-4149c2bbb6a1
+https://github.com/fabiospampinato/banal/assets/1812093/554327fa-c070-44af-89fb-52eff57a70ce
 
 Some example usages:
 
