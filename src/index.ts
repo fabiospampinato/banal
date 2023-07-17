@@ -9,7 +9,7 @@ import sanitize from 'sanitize-basename';
 import dirname from 'tiny-dirname';
 import open from 'tiny-open';
 import zeptoid from 'zeptoid';
-import {castArray, getTempPath, shell} from './utils';
+import {castArray, getTempPath, isRelative, partition, shell} from './utils';
 import type {Options} from './types';
 
 /* MAIN */
@@ -31,7 +31,9 @@ const Banal = {
     const analyzerTemplatePath = path.join ( resourcesPath, 'analyzer.html' );
 
     const modules = castArray ( options.module );
-    const outputName = sanitize ( modules.join ( '_' ).replaceAll ( '/', '-' ) );
+    const [modulesLocal, modulesRegistry] = partition ( modules, isRelative );
+    const modulesLocalAbsolute = modulesLocal.map ( module => path.resolve ( module ) );
+    const outputName = modulesRegistry.length ? sanitize ( modulesRegistry.join ( '_' ).replaceAll ( '/', '-' ) ) : 'bundle';
 
     const tempPath = await getTempPath ( 'banal' );
     const inputPath = path.join ( tempPath, 'input.js' );
@@ -42,11 +44,17 @@ const Banal = {
 
     /* INSTALLING */
 
-    await shell ( `npm install --ignore-scripts --no-audit --no-fund --no-package-lock ${modules.join ( ' ' )}`, { cwd: tempPath } );
+    if ( modulesRegistry.length ) {
+
+      await shell ( `npm install --ignore-scripts --no-audit --no-fund --no-package-lock ${modulesRegistry.join ( ' ' )}`, { cwd: tempPath } );
+
+    }
 
     /* BUNDLING */
 
-    const inputAll = modules.map ( module => `export * as _${zeptoid ()} from '${module.replace ( /(.)@.*/, '$1' )}';` ).join ( '\n' );
+    const inputRegistryAll = modulesRegistry.map ( module => `export * as _${zeptoid ()} from '${module.replace ( /(.)@.*/, '$1' )}';` ).join ( '\n' );
+    const inputLocalAll = modulesLocalAbsolute.map ( module => `export * as _${zeptoid ()} from '${module}';` ).join ( '\n' );
+    const inputAll = `${inputRegistryAll}\n${inputLocalAll}`;
     const input = options.entry || inputAll;
 
     await fs.writeFile ( inputPath, input );

@@ -35,8 +35,11 @@ banal crypto-sha
 # Analyze a single module, at a specific version
 banal crypto-sha@1.0.0
 
-# Analyze a single module, written after the explicit module flag (optional)
+# Analyze a single module, with the module flag set explicitly (optional)
 banal -m crypto-sha
+
+# Analyze a single local module
+banal ./src/index.ts
 
 # Analyze a single namespaced module
 banal @fabiospampinato/is
