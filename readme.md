@@ -30,16 +30,19 @@ Some example usages:
 
 ```sh
 # Analyze a single module
-banal -m crypto-sha
+banal crypto-sha
 
-# Analyze a single module at a specific version
-banal -m crypto-sha@1.0.0
+# Analyze a single module, at a specific version
+banal crypto-sha@1.0.0
+
+# Analyze a single module, written after the explicit module flag (optional)
+banal -m crypto-sha
 
 # Analyze a single namespaced module
 banal @fabiospampinato/is
 
 # Analyze multiple modules together
-banal -m crypto-sha @fabiospampinato/is
+banal crypto-sha crypto-puzzle
 
 # Analyze a Node module
 banal -p node -m banal
