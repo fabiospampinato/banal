@@ -10,7 +10,7 @@ import Banal from '.';
 bin ( 'banal', 'On-demand bundle analyzer, powered by esbuild' )
   /* ESBUILD OPTIONS */
   .option ( '--format, -f <format>', 'The bundle format: iife, cjs, esm', { default: 'esm' } )
-  .option ( '--platform, -p <platform>', 'The bundle platform: browser, node, neutral', { default: 'browser' } )
+  .option ( '--platform, -p <platform>', 'The bundle platform: browser, node, neutral', { default: 'node' } )
   .option ( '--target, -t <target>', 'The bundle target: es2016, es2017, es2018, es2019, es2020, esnext', { default: 'esnext' } )
   /* BANAL OPTIONS */
   .option ( '--modules, --module, -m <modules...>', 'The modules to analyze', { eager: true } )

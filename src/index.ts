@@ -64,7 +64,7 @@ const Banal = {
       entryPoints: [inputPath],
       outfile: outputPath,
       format: options.format ?? 'esm',
-      platform: options.platform ?? 'browser',
+      platform: options.platform ?? 'node',
       target: options.target ?? 'esnext',
       bundle: true,
       minify: true,
