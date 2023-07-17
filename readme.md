@@ -9,7 +9,7 @@ On-demand bundle analyzer, powered by esbuild.
 This little terminal app exists because [Bundlephobia](https://bundlephobia.com) and [bundlejs](https://bundlejs.com) are pretty cool and useful, but bundling locally and with offline support can easily work more reliably.
 
 - **Simple**: the way this app works is super simple, it just generates the metadata file for the [bundler analyzer](https://esbuild.github.io/analyze) in a temporary directory, embeds it inside the bundle analyzer itself, and opens it.
-- **Secure**: postinstall scripts are disabled for security reasons, and only dependencies I personally maintain, plus [`esbuild`](https://github.com/evanw/esbuild) and [`open`](https://github.com/sindresorhus/open), are used.
+- **Secure**: postinstall scripts are disabled for security reasons, and only dependencies I personally maintain and [`esbuild`](https://github.com/evanw/esbuild) are used.
 - **Available**: unless NPM itself is unreachable, or esbuild can't bundle your modules, this bundle analyzer will always be available.
 - **Customizable**: some important options, like the target platform or the target format, can be configured. Unlike in [Bundlephobia](https://bundlephobia.com) where for many modules bundling will just fail.
 - **Reliable**: bundling locally on your computer works more reliably than what [bundlejs](https://bundlejs.com) is doing, for example this works better with modules marked as side-effects-free, just by default.

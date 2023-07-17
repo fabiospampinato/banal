@@ -4,10 +4,10 @@
 import esbuild from 'esbuild';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import open from 'open';
 import Base64 from 'radix64-encoding';
 import sanitize from 'sanitize-basename';
 import dirname from 'tiny-dirname';
+import open from 'tiny-open';
 import {castArray, getTempPath, shell} from './utils';
 import type {Options} from './types';
 
@@ -74,7 +74,7 @@ const Banal = {
 
     /* OPENING */
 
-    await open ( analyzerPath );
+    open ( analyzerPath );
 
   }
 
