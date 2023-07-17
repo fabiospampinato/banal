@@ -8,6 +8,7 @@ import Base64 from 'radix64-encoding';
 import sanitize from 'sanitize-basename';
 import dirname from 'tiny-dirname';
 import open from 'tiny-open';
+import zeptoid from 'zeptoid';
 import {castArray, getTempPath, shell} from './utils';
 import type {Options} from './types';
 
@@ -45,7 +46,7 @@ const Banal = {
 
     /* BUNDLING */
 
-    const inputAll = modules.map ( module => `export * from '${module.replace ( /(.)@.*/, '$1' )}';` ).join ( '\n' );
+    const inputAll = modules.map ( module => `export * as _${zeptoid ()} from '${module.replace ( /(.)@.*/, '$1' )}';` ).join ( '\n' );
     const input = options.entry || inputAll;
 
     await fs.writeFile ( inputPath, input );
