@@ -33,6 +33,7 @@ const Banal = {
     const modules = castArray ( options.module );
     const [modulesLocal, modulesRegistry] = partition ( modules, isRelative );
     const modulesLocalAbsolute = modulesLocal.map ( module => path.resolve ( module ) );
+    const title = modulesRegistry.length ? modulesRegistry.join ( ', ' ) : 'bundle';
     const outputName = modulesRegistry.length ? sanitize ( modulesRegistry.join ( '_' ).replaceAll ( '/', '-' ) ) : 'bundle';
 
     const tempPath = await getTempPath ( 'banal' );
@@ -80,7 +81,7 @@ const Banal = {
     await fs.writeFile ( metafilePath, metafile );
 
     const analyzerTemplate = await fs.readFile ( analyzerTemplatePath, 'utf8' );
-    const analyzer = analyzerTemplate.replace ( `globalThis.METAFILE = '';`, `globalThis.METAFILE = '${metafile64}';` );
+    const analyzer = analyzerTemplate.replace ( `globalThis.METAFILE = '';`, `globalThis.METAFILE = '${metafile64}';` ).replace ( /<title>(.*)<\/title>/, `<title>${title}</title>` );
 
     await fs.writeFile ( analyzerPath, analyzer );
 
