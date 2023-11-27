@@ -22,7 +22,7 @@ const Banal = {
 
     /* CHECKS */
 
-    if ( !options.module?.length ) throw new Error ( 'You need to specify at least one module to analyze' );
+    if ( !options.module?.length && !options.metafile ) throw new Error ( 'You need to specify at least one module to analyze (or explicitly provide a metafile via --metafile)' );
 
     /* PATHS */
 
@@ -42,40 +42,48 @@ const Banal = {
     const metafilePath = path.join ( tempPath, 'metafile.json' );
     const analyzerPath = path.join ( tempPath, 'analyzer.html' );
 
+    let metafile = options.metafile
+      ? await fs.readFile ( options.metafile, 'utf8' )
+      : undefined;
+
     console.log ( `Temp path: ${tempPath}` );
 
-    /* INSTALLING */
+    if(!metafile) {
 
-    if ( modulesRegistry.length ) {
+      /* INSTALLING */
 
-      await shell ( `npm install --ignore-scripts --no-audit --no-fund --no-package-lock ${modulesRegistry.join ( ' ' )}`, { cwd: tempPath } );
+      if ( modulesRegistry.length ) {
 
+        await shell ( `npm install --ignore-scripts --no-audit --no-fund --no-package-lock ${modulesRegistry.join ( ' ' )}`, { cwd: tempPath } );
+
+      }
+
+      /* BUNDLING */
+
+      const inputRegistryAll = modulesRegistry.map ( module => `export * as _${zeptoid ()} from '${module.replace ( /(.)@.*/, '$1' )}';` ).join ( '\n' );
+      const inputLocalAll = modulesLocalAbsolute.map ( module => `export * as _${zeptoid ()} from '${module}';` ).join ( '\n' );
+      const inputAll = `${inputRegistryAll}\n${inputLocalAll}`;
+      const input = options.entry || inputAll;
+
+      await fs.writeFile ( inputPath, input );
+
+      const result = await esbuild.build ({
+        absWorkingDir: tempPath,
+        entryPoints: [inputPath],
+        outfile: outputPath,
+        format: options.format ?? 'esm',
+        platform: options.platform ?? 'node',
+        target: options.target ?? 'esnext',
+        bundle: true,
+        minify: true,
+        metafile: true
+      });
+
+      /* ANALYZING */
+
+      metafile = JSON.stringify ( result.metafile );
     }
 
-    /* BUNDLING */
-
-    const inputRegistryAll = modulesRegistry.map ( module => `export * as _${zeptoid ()} from '${module.replace ( /(.)@.*/, '$1' )}';` ).join ( '\n' );
-    const inputLocalAll = modulesLocalAbsolute.map ( module => `export * as _${zeptoid ()} from '${module}';` ).join ( '\n' );
-    const inputAll = `${inputRegistryAll}\n${inputLocalAll}`;
-    const input = options.entry || inputAll;
-
-    await fs.writeFile ( inputPath, input );
-
-    const result = await esbuild.build ({
-      absWorkingDir: tempPath,
-      entryPoints: [inputPath],
-      outfile: outputPath,
-      format: options.format ?? 'esm',
-      platform: options.platform ?? 'node',
-      target: options.target ?? 'esnext',
-      bundle: true,
-      minify: true,
-      metafile: true
-    });
-
-    /* ANALYZING */
-
-    const metafile = JSON.stringify ( result.metafile );
     const metafile64 = Base64.encodeStr ( metafile );
 
     await fs.writeFile ( metafilePath, metafile );

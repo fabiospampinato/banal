@@ -8,7 +8,8 @@ type Options = {
   target?: 'es2016' | 'es2017' | 'es2018' | 'es2019' | 'es2020' | 'esnext',
   /* BANAL OPTIONS */
   module?: string[] | string,
-  entry?: string
+  entry?: string,
+  metafile?: string
 };
 
 /* EXPORT */
