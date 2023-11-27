@@ -53,25 +53,11 @@ const Banal = {
 
     /* BUNDLING */
 
-    // console.log({modulesRegistry})
-    // // modify paths on windows
-    // const isWindows = process.platform === 'win32';
-    // if(isWindows) {
-    //   // for each entry in modulesRegistry, replace with file://
-    //   modulesRegistry.forEach((module, index) => {
-    //     modulesRegistry[index] = 'file://' + path.normalize(module).replace(/\\/g, '/');
-    //   })
-    // }
-    // console.log({modulesRegistry})
-
-    console.log({modulesLocalAbsolute})
-
     const inputRegistryAll = modulesRegistry.map ( module => `export * as _${zeptoid ()} from '${module.replace ( /(.)@.*/, '$1' )}';` ).join ( '\n' );
     const inputLocalAll = modulesLocalAbsolute.map ( module => `export * as _${zeptoid ()} from '${module}';` ).join ( '\n' );
     const inputAll = `${inputRegistryAll}\n${inputLocalAll}`;
     let input = options.entry || inputAll;
 
-    console.log({ input })
     await fs.writeFile ( inputPath, input );
 
     const result = await esbuild.build ({
@@ -100,7 +86,6 @@ const Banal = {
 
     /* OPENING */
 
-    console.log({ analyzerPath })
     open ( analyzerPath );
 
   }
