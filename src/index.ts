@@ -6,11 +6,11 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import Base64 from 'radix64-encoding';
 import sanitize from 'sanitize-basename';
-import dirname from 'tiny-dirname';
 import open from 'tiny-open';
 import zeptoid from 'zeptoid';
 import {castArray, getTempPath, isRelative, partition, shell} from './utils';
 import type {Options} from './types';
+import { fileURLToPath } from 'node:url';
 
 /* MAIN */
 
@@ -25,8 +25,7 @@ const Banal = {
     if ( !options.module?.length ) throw new Error ( 'You need to specify at least one module to analyze' );
 
     /* PATHS */
-
-    const distPath = dirname ( import.meta.url );
+    const distPath = fileURLToPath(new URL('.', import.meta.url))
     const resourcesPath = path.join ( distPath, '..', 'resources' );
     const analyzerTemplatePath = path.join ( resourcesPath, 'analyzer.html' );
 
@@ -54,11 +53,25 @@ const Banal = {
 
     /* BUNDLING */
 
+    // console.log({modulesRegistry})
+    // // modify paths on windows
+    // const isWindows = process.platform === 'win32';
+    // if(isWindows) {
+    //   // for each entry in modulesRegistry, replace with file://
+    //   modulesRegistry.forEach((module, index) => {
+    //     modulesRegistry[index] = 'file://' + path.normalize(module).replace(/\\/g, '/');
+    //   })
+    // }
+    // console.log({modulesRegistry})
+
+    console.log({modulesLocalAbsolute})
+
     const inputRegistryAll = modulesRegistry.map ( module => `export * as _${zeptoid ()} from '${module.replace ( /(.)@.*/, '$1' )}';` ).join ( '\n' );
     const inputLocalAll = modulesLocalAbsolute.map ( module => `export * as _${zeptoid ()} from '${module}';` ).join ( '\n' );
     const inputAll = `${inputRegistryAll}\n${inputLocalAll}`;
-    const input = options.entry || inputAll;
+    let input = options.entry || inputAll;
 
+    console.log({ input })
     await fs.writeFile ( inputPath, input );
 
     const result = await esbuild.build ({
@@ -87,6 +100,7 @@ const Banal = {
 
     /* OPENING */
 
+    console.log({ analyzerPath })
     open ( analyzerPath );
 
   }
