@@ -25,6 +25,7 @@ const Banal = {
     if ( !options.module?.length ) throw new Error ( 'You need to specify at least one module to analyze' );
 
     /* PATHS */
+
     const distPath = fileURLToPath(new URL('.', import.meta.url))
     const resourcesPath = path.join ( distPath, '..', 'resources' );
     const analyzerTemplatePath = path.join ( resourcesPath, 'analyzer.html' );
@@ -56,7 +57,7 @@ const Banal = {
     const inputRegistryAll = modulesRegistry.map ( module => `export * as _${zeptoid ()} from '${module.replace ( /(.)@.*/, '$1' )}';` ).join ( '\n' );
     const inputLocalAll = modulesLocalAbsolute.map ( module => `export * as _${zeptoid ()} from '${module}';` ).join ( '\n' );
     const inputAll = `${inputRegistryAll}\n${inputLocalAll}`;
-    let input = options.entry || inputAll;
+    const input = options.entry || inputAll;
 
     await fs.writeFile ( inputPath, input );
 
