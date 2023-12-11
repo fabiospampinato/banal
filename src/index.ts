@@ -57,7 +57,7 @@ const Banal = {
     const inputRegistryAll = modulesRegistry.map ( module => `export * as _${zeptoid ()} from '${module.replace ( /(.)@.*/, '$1' )}';` ).join ( '\n' );
     const inputLocalAll = modulesLocalAbsolute.map ( module => `export * as _${zeptoid ()} from '${module}';` ).join ( '\n' );
     const inputAll = `${inputRegistryAll}\n${inputLocalAll}`;
-    const input = options.entry || inputAll;
+    const input = options.input || inputAll;
 
     await fs.writeFile ( inputPath, input );
 
