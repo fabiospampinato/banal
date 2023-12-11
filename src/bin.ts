@@ -15,6 +15,7 @@ bin ( 'banal', 'On-demand bundle analyzer, powered by esbuild' )
   /* BANAL OPTIONS */
   .option ( '--modules, --module, -m <modules...>', 'The modules to analyze', { eager: true } )
   .option ( '--entry, -e <entry>', 'The content of the entry file' )
+  .option ( '--no-open', 'Avoid opening the build analyzer automatically', { default: true } )
   /* BANAL ARGUMENTS */
   .argument ( '[modules...]', 'The modules to analyze' )
   /* ACTION */

@@ -87,7 +87,11 @@ const Banal = {
 
     /* OPENING */
 
-    open ( analyzerPath );
+    if ( options.open ) {
+
+      open ( analyzerPath );
+
+    }
 
   }
 
