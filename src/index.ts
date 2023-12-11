@@ -6,6 +6,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import Base64 from 'radix64-encoding';
 import sanitize from 'sanitize-basename';
+import {exit} from 'specialist';
 import dirname from 'tiny-dirname';
 import open from 'tiny-open';
 import zeptoid from 'zeptoid';
@@ -14,15 +15,39 @@ import type {Options} from './types';
 
 /* MAIN */
 
+//TODO: Reduce code duplication
+
 const Banal = {
 
   /* API */
 
   analyze: async ( options: Options ): Promise<void> => {
 
+    if ( !options.module?.length && !options.metafile ) {
+
+      exit ( 'You need to specify either some modules or a metafile to analyze' );
+
+    } else if ( options.module?.length && options.metafile ) {
+
+      exit ( 'You cannot specify both some modules and a metafile to analyze' );
+
+    } else if ( options.module?.length ) {
+
+      await Banal.analyzeWithModule ( options );
+
+    } else {
+
+      await Banal.analyzeWithMetafile ( options );
+
+    }
+
+  },
+
+  analyzeWithModule: async ( options: Options ): Promise<void> => {
+
     /* CHECKS */
 
-    if ( !options.module?.length ) throw new Error ( 'You need to specify at least one module to analyze' );
+    if ( !options.module?.length ) exit ( 'You need to specify at least one module to analyze' );
 
     /* PATHS */
 
@@ -93,7 +118,46 @@ const Banal = {
 
     }
 
-  }
+  },
+
+  analyzeWithMetafile: async ( options: Options ): Promise<void> => {
+
+    /* CHECKS */
+
+    if ( !options.metafile ) exit ( 'You need to specify a path for the metadata file' );
+
+    /* PATHS */
+
+    const distPath = dirname ( import.meta.url );
+    const resourcesPath = path.join ( distPath, '..', 'resources' );
+    const analyzerTemplatePath = path.join ( resourcesPath, 'analyzer.html' );
+
+    const tempPath = await getTempPath ( 'banal' );
+    const analyzerPath = path.join ( tempPath, 'analyzer.html' );
+
+    console.log ( `Temp path: ${tempPath}` );
+
+    /* ANALYZING */
+
+    const title = 'Banal';
+
+    const metafile = await fs.readFile ( options.metafile, 'utf8' );
+    const metafile64 = Base64.encodeStr ( metafile );
+
+    const analyzerTemplate = await fs.readFile ( analyzerTemplatePath, 'utf8' );
+    const analyzer = analyzerTemplate.replace ( `globalThis.METAFILE = '';`, `globalThis.METAFILE = '${metafile64}';` ).replace ( /<title>(.*)<\/title>/, `<title>${title}</title>` );
+
+    await fs.writeFile ( analyzerPath, analyzer );
+
+    /* OPENING */
+
+    if ( options.open ) {
+
+      open ( analyzerPath );
+
+    }
+
+  },
 
 };
 
