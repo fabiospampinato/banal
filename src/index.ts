@@ -61,11 +61,13 @@ const Banal = {
     const title = modulesRegistry.length ? modulesRegistry.join ( ', ' ) : 'bundle';
     const outputName = modulesRegistry.length ? sanitize ( modulesRegistry.join ( '_' ).replaceAll ( '/', '-' ) ) : 'bundle';
 
-    const tempPath = await getTempPath ( 'banal' );
+    const tempPath = options.output ? path.resolve ( options.output ) : await getTempPath ( 'banal' );
     const inputPath = path.join ( tempPath, 'input.js' );
     const outputPath = path.join ( tempPath, `${outputName}.js` );
     const metafilePath = path.join ( tempPath, 'metafile.json' );
     const analyzerPath = path.join ( tempPath, 'analyzer.html' );
+
+    await fs.mkdir ( tempPath, { recursive: true } );
 
     console.log ( `Temp path: ${tempPath}` );
 
