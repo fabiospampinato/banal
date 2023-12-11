@@ -10,6 +10,8 @@ type Options = {
   metafile?: string,
   module?: string[] | string,
   input?: string,
+  outputAnalysis?: string,
+  outputMetafile?: string,
   open?: boolean
 };
 

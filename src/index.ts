@@ -110,6 +110,20 @@ const Banal = {
 
     await fs.writeFile ( analyzerPath, analyzer );
 
+    /* COPYING */
+
+    if ( options.outputAnalysis ) {
+
+      await fs.copyFile ( analyzerPath, options.outputAnalysis );
+
+    }
+
+    if ( options.outputMetafile ) {
+
+      await fs.copyFile ( metafilePath, options.outputMetafile );
+
+    }
+
     /* OPENING */
 
     if ( options.open ) {
@@ -148,6 +162,20 @@ const Banal = {
     const analyzer = analyzerTemplate.replace ( `globalThis.METAFILE = '';`, `globalThis.METAFILE = '${metafile64}';` ).replace ( /<title>(.*)<\/title>/, `<title>${title}</title>` );
 
     await fs.writeFile ( analyzerPath, analyzer );
+
+    /* COPYING */
+
+    if ( options.outputAnalysis ) {
+
+      await fs.copyFile ( analyzerPath, options.outputAnalysis );
+
+    }
+
+    if ( options.outputMetafile ) {
+
+      await fs.writeFile ( options.outputMetafile, metafile );
+
+    }
 
     /* OPENING */
 
