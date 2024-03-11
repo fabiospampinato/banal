@@ -92,6 +92,7 @@ const Banal = {
       absWorkingDir: tempPath,
       entryPoints: [inputPath],
       outfile: outputPath,
+      external: options.external ? castArray ( options.external ) : undefined,
       format: options.format ?? 'esm',
       platform: options.platform ?? 'node',
       target: options.target ?? 'esnext',
