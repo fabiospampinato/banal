@@ -117,12 +117,14 @@ const Banal = {
 
     if ( options.outputAnalysis ) {
 
+      await fs.mkdir ( path.dirname ( options.outputAnalysis ), { recursive: true } );
       await fs.copyFile ( analyzerPath, options.outputAnalysis );
 
     }
 
     if ( options.outputMetafile ) {
 
+      await fs.mkdir ( path.dirname ( options.outputMetafile ), { recursive: true } );
       await fs.copyFile ( metafilePath, options.outputMetafile );
 
     }
@@ -170,12 +172,14 @@ const Banal = {
 
     if ( options.outputAnalysis ) {
 
+      await fs.mkdir ( path.dirname ( options.outputAnalysis ), { recursive: true } );
       await fs.copyFile ( analyzerPath, options.outputAnalysis );
 
     }
 
     if ( options.outputMetafile ) {
 
+      await fs.mkdir ( path.dirname ( options.outputMetafile ), { recursive: true } );
       await fs.writeFile ( options.outputMetafile, metafile );
 
     }
