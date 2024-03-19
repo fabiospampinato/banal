@@ -2,7 +2,7 @@
   "name": "banal",
   "repository": "github:fabiospampinato/banal",
   "description": "On-demand bundle analyzer, powered by esbuild.",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "type": "module",
   "bin": "dist/bin.js",
   "main": "dist/index.js",
