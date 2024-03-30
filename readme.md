@@ -1,3 +1,8 @@
+
+<p align="center">
+  <img src="./resources/banner.png" alt="Banal's Banner" width="640px" height="320px">
+</p>
+
 # Banal
 
 On-demand bundle analyzer, powered by esbuild.
