@@ -11,7 +11,7 @@ import dirname from 'tiny-dirname';
 import open from 'tiny-open';
 import zeptoid from 'zeptoid';
 import {castArray, getTempPath, isRelative, partition, shell} from './utils';
-import type {Options} from './types';
+import type {Options, OutputWithModules, OutputWithMetafile} from './types';
 
 /* MAIN */
 
@@ -69,13 +69,17 @@ const Banal = {
 
     await fs.mkdir ( tempPath, { recursive: true } );
 
-    console.log ( `Temp path: ${tempPath}` );
+    if ( !options.json ) {
+
+      console.log ( `Temp path: ${tempPath}` );
+
+    }
 
     /* INSTALLING */
 
     if ( modulesRegistry.length ) {
 
-      await shell ( `npm install --ignore-scripts --no-audit --no-fund --no-package-lock ${modulesRegistry.join ( ' ' )}`, { cwd: tempPath } );
+      await shell ( `npm install --ignore-scripts --no-audit --no-fund --no-package-lock ${modulesRegistry.join ( ' ' )}`, { cwd: tempPath, stdio: options.json ? 'pipe' : 'inherit' } );
 
     }
 
@@ -137,6 +141,18 @@ const Banal = {
 
     }
 
+    /* OUTPUT */
+
+    const output: OutputWithModules = { tempPath, inputPath, outputPath, metafilePath, analyzerPath };
+
+    /* JSON */
+
+    if ( options.json ) {
+
+      console.log ( JSON.stringify ( output, undefined, 2 ) );
+
+    }
+
   },
 
   analyzeWithMetafile: async ( options: Options ): Promise<void> => {
@@ -152,15 +168,20 @@ const Banal = {
     const analyzerTemplatePath = path.join ( resourcesPath, 'analyzer.html' );
 
     const tempPath = await getTempPath ( 'banal' );
+    const metafilePath = path.resolve ( options.metafile );
     const analyzerPath = path.join ( tempPath, 'analyzer.html' );
 
-    console.log ( `Temp path: ${tempPath}` );
+    if ( !options.json ) {
+
+      console.log ( `Temp path: ${tempPath}` );
+
+    }
 
     /* ANALYZING */
 
     const title = 'Banal';
 
-    const metafile = await fs.readFile ( options.metafile, 'utf8' );
+    const metafile = await fs.readFile ( metafilePath, 'utf8' );
     const metafile64 = Base64.encodeStr ( metafile );
 
     const analyzerTemplate = await fs.readFile ( analyzerTemplatePath, 'utf8' );
@@ -192,7 +213,19 @@ const Banal = {
 
     }
 
-  },
+    /* OUTPUT */
+
+    const output: OutputWithMetafile = { tempPath, metafilePath, analyzerPath };
+
+    /* JSON */
+
+    if ( options.json ) {
+
+      console.log ( JSON.stringify ( output, undefined, 2 ) );
+
+    }
+
+  }
 
 };
 
