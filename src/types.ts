@@ -22,6 +22,7 @@ type OutputWithModules = {
   tempPath: string,
   inputPath: string,
   outputPath: string,
+  outputSize: number,
   metafilePath: string,
   analyzerPath: string
 };
@@ -29,7 +30,8 @@ type OutputWithModules = {
 type OutputWithMetafile = {
   tempPath: string,
   metafilePath: string,
-  analyzerPath: string
+  analyzerPath: string,
+  outputSize: number
 };
 
 /* EXPORT */

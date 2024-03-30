@@ -143,7 +143,8 @@ const Banal = {
 
     /* OUTPUT */
 
-    const output: OutputWithModules = { tempPath, inputPath, outputPath, metafilePath, analyzerPath };
+    const outputSize = await fs.stat ( outputPath ).then ( stats => stats.size );
+    const output: OutputWithModules = { tempPath, inputPath, outputPath, outputSize, metafilePath, analyzerPath };
 
     /* JSON */
 
@@ -181,8 +182,9 @@ const Banal = {
 
     const title = 'Banal';
 
-    const metafile = await fs.readFile ( metafilePath, 'utf8' );
-    const metafile64 = Base64.encodeStr ( metafile );
+    const metafileRaw = await fs.readFile ( metafilePath, 'utf8' );
+    const metafile = JSON.parse ( metafileRaw );
+    const metafile64 = Base64.encodeStr ( metafileRaw );
 
     const analyzerTemplate = await fs.readFile ( analyzerTemplatePath, 'utf8' );
     const analyzer = analyzerTemplate.replace ( `globalThis.METAFILE = '';`, `globalThis.METAFILE = '${metafile64}';` ).replace ( /<title>(.*)<\/title>/, `<title>${title}</title>` );
@@ -215,7 +217,8 @@ const Banal = {
 
     /* OUTPUT */
 
-    const output: OutputWithMetafile = { tempPath, metafilePath, analyzerPath };
+    const outputSize = Object.keys ( metafile.outputs ).map ( output => metafile.outputs[output].bytes ).reduce ( ( acc, bytes ) => acc + bytes, 0 );
+    const output: OutputWithMetafile = { tempPath, metafilePath, analyzerPath, outputSize };
 
     /* JSON */
 
