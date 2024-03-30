@@ -10,6 +10,7 @@ import {exit} from 'specialist';
 import dirname from 'tiny-dirname';
 import open from 'tiny-open';
 import zeptoid from 'zeptoid';
+import {EXTERNALS} from './constants';
 import {castArray, getTempPath, isRelative, partition, shell} from './utils';
 import type {Options, OutputWithModules, OutputWithMetafile} from './types';
 
@@ -96,7 +97,7 @@ const Banal = {
       absWorkingDir: tempPath,
       entryPoints: [inputPath],
       outfile: outputPath,
-      external: options.external ? castArray ( options.external ) : undefined,
+      external: options.external ? [...EXTERNALS, ...castArray ( options.external )] : EXTERNALS,
       format: options.format ?? 'esm',
       platform: options.platform ?? 'node',
       target: options.target ?? 'esnext',
