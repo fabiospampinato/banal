@@ -1,5 +1,3 @@
-> This was tested under macOS+node+npm, if it doesn't work for you please open an issue.
-
 # Banal
 
 On-demand bundle analyzer, powered by esbuild.
