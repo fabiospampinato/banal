@@ -56,6 +56,10 @@ banal -p node -m banal
 banal -m @fabiospampinato/is -e 'export {isWeakRef} from "@fabiospampinato/is";'
 ```
 
+## Related
+
+- **[Banal for VSCode](https://marketplace.visualstudio.com/items?itemName=fabiospampinato.vscode-banal)**: The official companion extension for Banal, for quickly inspecting the bundle size of npm dependencies.
+
 ## License
 
 - App: MIT © Fabio Spampinato
