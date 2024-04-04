@@ -236,4 +236,4 @@ const Banal = {
 /* EXPORT */
 
 export default Banal;
-export type {Options};
+export type {Options, OutputWithModules, OutputWithMetafile};
