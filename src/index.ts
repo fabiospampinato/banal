@@ -98,6 +98,7 @@ const Banal = {
       entryPoints: [inputPath],
       outfile: outputPath,
       external: options.external ? [...EXTERNALS, ...castArray ( options.external )] : EXTERNALS,
+      loader: { '.node': 'file' },
       format: options.format ?? 'esm',
       platform: options.platform ?? 'node',
       target: options.target ?? 'esnext',
