@@ -52,8 +52,8 @@ banal crypto-sha crypto-puzzle
 # Analyze a Node module
 banal -p node -m banal
 
-# Analyze a single module with a custom entry file
-banal -m @fabiospampinato/is -e 'export {isWeakRef} from "@fabiospampinato/is";'
+# Analyze a single module with a custom input file
+banal -m @fabiospampinato/is -i 'export {isWeakRef} from "@fabiospampinato/is";'
 ```
 
 ## Related
