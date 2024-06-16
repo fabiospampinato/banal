@@ -20,7 +20,7 @@
     "esbuild"
   ],
   "dependencies": {
-    "esbuild": "^0.19.12",
+    "esbuild": "^0.21.5",
     "radix64-encoding": "^2.0.1",
     "sanitize-basename": "^2.0.0",
     "specialist": "^1.4.0",
