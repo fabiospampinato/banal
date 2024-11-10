@@ -52,6 +52,9 @@ banal crypto-sha crypto-puzzle
 # Analyze a Node module
 banal -p node -m banal
 
+# Analyze an esbuild metafile
+banal -M ./path/to/metafile.json
+
 # Analyze a single module with a custom input file
 banal -m @fabiospampinato/is -i 'export {isWeakRef} from "@fabiospampinato/is";'
 ```
