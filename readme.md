@@ -57,6 +57,12 @@ banal -M ./path/to/metafile.json
 
 # Analyze a single module with a custom input file
 banal -m @fabiospampinato/is -i 'export {isWeakRef} from "@fabiospampinato/is";'
+
+# Output the esbuild analysis to a custom path
+banal --output-analysis analysis.html crypto-sha
+
+# Output the esbuild metafile to a custom path
+banal --output-metafile metafile.json crypto-sha
 ```
 
 ## Related
