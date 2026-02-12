@@ -21,17 +21,17 @@
     "esbuild"
   ],
   "dependencies": {
-    "esbuild": "^0.21.5",
-    "radix64-encoding": "^2.0.1",
-    "sanitize-basename": "^2.0.0",
-    "specialist": "^1.4.0",
-    "tiny-dirname": "^1.0.1",
-    "tiny-open": "^1.1.1",
-    "zeptoid": "^1.0.1"
+    "esbuild": "^0.27.3",
+    "radix64-encoding": "^2.0.2",
+    "sanitize-basename": "^2.0.2",
+    "specialist": "^2.0.0",
+    "tiny-dirname": "^1.0.2",
+    "tiny-open": "^1.2.0",
+    "zeptoid": "^1.0.2"
   },
   "devDependencies": {
-    "@types/node": "^20.4.10",
-    "tsex": "^3.0.1",
-    "typescript": "^5.3.3"
+    "@types/node": "^18.19.130",
+    "tsex": "^4.0.2",
+    "typescript": "^5.9.3"
   }
 }
