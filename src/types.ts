@@ -3,6 +3,7 @@
 
 type Options = {
   /* ESBUILD OPTIONS */
+  define?: string,
   external?: string | string[],
   format?: 'iife' | 'cjs' | 'esm',
   platform?: 'browser' | 'node' | 'neutral',

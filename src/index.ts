@@ -97,6 +97,7 @@ const Banal = {
       absWorkingDir: tempPath,
       entryPoints: [inputPath],
       outfile: outputPath,
+      define: options.define ? JSON.parse ( options.define ) : {},
       external: options.external ? [...EXTERNALS, ...castArray ( options.external )] : EXTERNALS,
       loader: { '.node': 'file' },
       format: options.format ?? 'esm',

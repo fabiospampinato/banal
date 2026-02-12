@@ -9,6 +9,7 @@ import Banal from '.';
 
 bin ( 'banal', 'On-demand bundle analyzer, powered by esbuild' )
   /* ESBUILD OPTIONS */
+  .option ( '--define <json>', 'Define key/value replacements, as a JSON object' )
   .option ( '--external <package...>', 'Packages to consider as external' )
   .option ( '--format, -f <format>', 'The bundle format: iife, cjs, esm', { default: 'esm', enum: ['iife', 'cjs', 'esm'] as const } )
   .option ( '--platform, -p <platform>', 'The bundle platform: browser, node, neutral', { default: 'node', enum: ['browser', 'node', 'neutral'] as const } )
