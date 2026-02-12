@@ -2,6 +2,7 @@
   "name": "banal",
   "repository": "github:fabiospampinato/banal",
   "description": "On-demand bundle analyzer, powered by esbuild.",
+  "license": "MIT",
   "version": "1.6.4",
   "type": "module",
   "bin": "dist/bin.js",
