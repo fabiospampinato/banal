@@ -1,0 +1,9 @@
+resources/*.afphoto
+resources/*.mp4
+resources/*.png
+src
+tasks
+test
+
+.editorconfig
+tsconfig.json
