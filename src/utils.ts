@@ -2,6 +2,7 @@
 /* IMPORT */
 
 import {spawn, type SpawnOptions} from 'node:child_process';
+import sfs from 'node:fs';
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
@@ -27,7 +28,7 @@ const getTempPath = async ( prefix: string ): Promise<string> => {
 
 const isRelative = ( module: string ): boolean => {
 
-  return module.startsWith ( '.' ) || module.startsWith ( '/' );
+  return module.startsWith ( '.' ) || module.startsWith ( '/' ) || sfs.existsSync ( module );
 
 };
 
