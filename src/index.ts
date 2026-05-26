@@ -4,6 +4,7 @@
 import esbuild from 'esbuild';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import process from 'node:process';
 import Base64 from 'radix64-encoding';
 import sanitize from 'sanitize-basename';
 import {exit} from 'specialist';
@@ -67,6 +68,7 @@ const Banal = {
     const outputPath = path.join ( tempPath, `${outputName}.js` );
     const metafilePath = path.join ( tempPath, 'metafile.json' );
     const analyzerPath = path.join ( tempPath, 'analyzer.html' );
+    const processPath = modulesRegistry.length ? tempPath : process.cwd ();
 
     await fs.mkdir ( tempPath, { recursive: true } );
 
@@ -94,7 +96,7 @@ const Banal = {
     await fs.writeFile ( inputPath, input );
 
     const result = await esbuild.build ({
-      absWorkingDir: tempPath,
+      absWorkingDir: processPath,
       entryPoints: [inputPath],
       outfile: outputPath,
       define: options.define ? JSON.parse ( options.define ) : {},
