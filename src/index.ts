@@ -11,7 +11,7 @@ import {exit} from 'specialist';
 import dirname from 'tiny-dirname';
 import open from 'tiny-open';
 import zeptoid from 'zeptoid';
-import {EXTERNALS} from './constants';
+import {EXTERNALS, LOADERS} from './constants';
 import {castArray, getTempPath, isRelative, partition, shell} from './utils';
 import type {Options, OutputWithModules, OutputWithMetafile} from './types';
 
@@ -101,7 +101,7 @@ const Banal = {
       outfile: outputPath,
       define: options.define ? JSON.parse ( options.define ) : {},
       external: options.external ? [...EXTERNALS, ...castArray ( options.external )] : EXTERNALS,
-      loader: { '.node': 'file' },
+      loader: LOADERS,
       format: options.format ?? 'esm',
       platform: options.platform ?? 'node',
       target: options.target ?? 'esnext',
